@@ -8,6 +8,12 @@
     <LangVersion>latest</LangVersion>
     <AssemblyName>uadiff</AssemblyName>
     <RootNamespace>CeyhunDiffViewer.Cli</RootNamespace>
+
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>uadiff</ToolCommandName>
+    <PackageId>CeyhunDiffViewer</PackageId>
+    <Version>0.1.0</Version>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)nupkg</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -37,11 +37,11 @@ main{display:grid;grid-template-columns:minmax(280px,32%) 1fr;height:calc(100vh 
 .row .name{font-weight:600}
 .row .path{color:var(--muted);font-size:11px;word-break:break-all;margin-top:2px}
 .badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:2px 6px;border-radius:5px;margin-right:6px;vertical-align:middle}
-.b-added{background:var(--added)22;color:var(--added)}
-.b-deleted{background:var(--deleted)22;color:var(--deleted)}
-.b-modified{background:var(--modified)22;color:var(--modified)}
-.b-renamed{background:var(--renamed)22;color:var(--renamed)}
-.b-replaced{background:var(--replaced)22;color:var(--replaced)}
+.b-added{background:rgba(63,185,80,.15);color:var(--added)}
+.b-deleted{background:rgba(248,81,73,.15);color:var(--deleted)}
+.b-modified{background:rgba(91,157,255,.15);color:var(--modified)}
+.b-renamed{background:rgba(188,140,255,.15);color:var(--renamed)}
+.b-replaced{background:rgba(227,160,8,.15);color:var(--replaced)}
 .hint{color:var(--muted);padding:24px}
 .dhead{margin-bottom:14px}
 .dhead h2{margin:0 0 4px;font-size:16px;word-break:break-all}
@@ -91,7 +91,11 @@ async function loadRefs(){
   }catch(e){}
 }
 
+function savePrefs(){
+  try{ localStorage.setItem('cdv.base',base()); localStorage.setItem('cdv.target',target()); localStorage.setItem('cdv.filter',$('#filter').value.trim()); }catch(e){}
+}
 async function scan(){
+  savePrefs();
   const list = $('#list');
   list.innerHTML = '<div class="hint">Scanning…</div>';
   $('#counts').textContent = '';
@@ -185,7 +189,16 @@ function labelOf(kind){
     overrideAdded:'OVERRIDE ADDED',overrideRemoved:'OVERRIDE REMOVED',overrideChanged:'OVERRIDE CHANGED'}[kind])||kind;
 }
 
+['base','target','filter'].forEach(id =>
+  document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') scan(); }));
+(function initPrefs(){
+  try{
+    const b=localStorage.getItem('cdv.base'), t=localStorage.getItem('cdv.target'), f=localStorage.getItem('cdv.filter');
+    if(b) $('#base').value=b; if(t) $('#target').value=t; if(f) $('#filter').value=f;
+  }catch(e){}
+})();
 loadRefs();
+scan();
 </script>
 </body>
 </html>
