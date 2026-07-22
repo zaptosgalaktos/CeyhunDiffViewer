@@ -15,7 +15,11 @@ public sealed class DiffService
 {
     private readonly GitClient _git;
 
-    public DiffService(string repoPath) => _git = new GitClient(repoPath);
+    public DiffService(string repoPath)
+    {
+        _git = new GitClient(repoPath);
+        RepoMemory.Save(repoPath);
+    }
 
     public IReadOnlyList<AssetChange> Scan(
         string baseRef, string targetRef, IReadOnlyList<string> filters)

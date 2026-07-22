@@ -18,6 +18,8 @@ try
             return RunDiff(args[1..]);
         case "serve":
             return ServeCommand.Run(args[1..]);
+        case "difftool":
+            return DiffToolCommand.Run(args[1..]);
         case "-h" or "--help" or "help":
             PrintUsage();
             return 0;
@@ -129,6 +131,10 @@ static void PrintUsage()
 
           serve [repo] [--port <n>]
               Launch the local web UI (default port 5099) and open it in the browser.
+
+          difftool <leftFile> <rightFile> [--name <repoPath>] [--repo <dir>]
+              Render one asset's semantic diff from two extracted file versions and open
+              it in the browser. Used as a git/Fork external diff tool.
 
         Examples:
           uadiff scan . HEAD~1 HEAD
