@@ -7,7 +7,10 @@ public enum ChangeKind
     FieldChanged,
     OverrideAdded,
     OverrideRemoved,
-    OverrideChanged
+    OverrideChanged,
+    StepAdded,
+    StepRemoved,
+    StepMoved
 }
 
 /// <summary>The object a change happened on, resolved to human-readable form.</summary>

@@ -77,7 +77,7 @@ const esc = s => (s??"").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&
 const fileName = p => (p||"").split('/').pop();
 function groupKey(c){ return [c.kind, c.object.type, c.propertyPath||'', c.before&&c.before.resolved||'', c.after&&c.after.resolved||'', c.target||''].join('¦'); }
 function whereOf(o){ return o.location || o.hierarchy || o.name || ('&'+o.fileId); }
-function labelOf(kind){ return ({documentAdded:'OBJECT ADDED',documentRemoved:'OBJECT REMOVED',fieldChanged:'FIELD CHANGED',overrideAdded:'OVERRIDE ADDED',overrideRemoved:'OVERRIDE REMOVED',overrideChanged:'OVERRIDE CHANGED'}[kind])||kind; }
+function labelOf(kind){ return ({documentAdded:'OBJECT ADDED',documentRemoved:'OBJECT REMOVED',fieldChanged:'FIELD CHANGED',overrideAdded:'OVERRIDE ADDED',overrideRemoved:'OVERRIDE REMOVED',overrideChanged:'OVERRIDE CHANGED',stepAdded:'STEP ADDED',stepRemoved:'STEP REMOVED',stepMoved:'STEP MOVED'}[kind])||kind; }
 function renderDiff(d){
   const detail = $('#detail');
   const p = d.targetPath || d.basePath;
@@ -99,7 +99,7 @@ function renderDiff(d){
   }
   for(const g of groups.values()){
     const sample = g.sample, items = g.items;
-    const kindClass = ({overrideAdded:'added',documentAdded:'added',overrideRemoved:'deleted',documentRemoved:'deleted'}[sample.kind])||'modified';
+    const kindClass = ({overrideAdded:'added',documentAdded:'added',stepAdded:'added',overrideRemoved:'deleted',documentRemoved:'deleted',stepRemoved:'deleted'}[sample.kind])||'modified';
     html += `<div class="card">
       <div class="k b-${kindClass}" style="background:none;padding:0">${esc(labelOf(sample.kind))}${items.length>1?` <span class="count" style="color:var(--muted);font-weight:400">×${items.length}</span>`:''}</div>`;
     html += `<div class="tgt">[${esc(sample.object.type)}]${sample.target?` · ${esc(sample.target)}`:''}</div>`;

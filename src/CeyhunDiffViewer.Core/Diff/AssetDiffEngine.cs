@@ -56,6 +56,10 @@ public sealed class AssetDiffEngine
                 DiffModifications(baseDoc, targetDoc, targetAsset,
                     baseResolver, targetResolver, guidToPathTarget,
                     baseTargeting, targetTargeting, changes);
+            else if (FlowMakerEnricher.Matches(targetDoc))
+                FlowMakerEnricher.Diff(baseDoc, targetDoc,
+                    MakeObjectRef(targetAsset, targetDoc, guidToPathTarget),
+                    baseResolver, targetResolver, changes);
             else
                 DiffFields(baseDoc, targetDoc, targetAsset,
                     baseResolver, targetResolver, guidToPathTarget, changes);
